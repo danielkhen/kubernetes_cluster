@@ -10,6 +10,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
   private_cluster_enabled = var.private_cluster_enabled
   dns_prefix              = var.dns_prefix == null ? var.name : var.dns_prefix
 
+  auto_scaler_profile {
+    max_node_provisioning_time = ""
+  }
+
   network_profile {
     network_plugin = var.network_plugin
     service_cidr   = var.service_cidr
