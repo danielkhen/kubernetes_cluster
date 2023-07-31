@@ -11,7 +11,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   dns_prefix              = var.dns_prefix == null ? var.name : var.dns_prefix
 
   auto_scaler_profile {
-    max_node_provisioning_time = ""
+    max_node_provisioning_time = var.max_node_provisioning_time
   }
 
   network_profile {
@@ -34,7 +34,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   dynamic "identity" {
-    for_each = var.container_registry_link  ? [true] : []
+    for_each = var.container_registry_link ? [true] : []
 
     content {
       type = local.identity_type

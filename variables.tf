@@ -121,6 +121,6 @@ variable "dns_service_ip" {
 
 variable "max_node_provisioning_time" {
   description = "(Optional) The maximum time the autoscaler waits for a node to be provisioned."
-  type = string
-  default = "15m"
+  type        = string
+  default     = "15m"
 }
