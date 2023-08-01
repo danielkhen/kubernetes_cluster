@@ -41,12 +41,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
-  dynamic "oms_agent" {
-    for_each = var.log_analytics_enabled ? [true] : []
-
-    content {
-      log_analytics_workspace_id = var.log_analytics_id
-    }
+  oms_agent {
+    log_analytics_workspace_id = var.log_analytics_id
   }
 
   lifecycle {
@@ -87,11 +83,14 @@ resource "azurerm_role_assignment" "acr_role" {
   scope                = var.container_registry_id
 }
 
-module "aks_diagnostics" {
-  source = "github.com/danielkhen/diagnostic_setting_module"
-  count  = var.log_analytics_enabled ? 1 : 0
+locals {
+  aks_diagnostic_name = "${azurerm_kubernetes_cluster.aks.name}-diagnostic"
+}
 
-  name                       = var.diagnostics_name
+module "aks_diagnostic" {
+  source = "github.com/danielkhen/diagnostic_setting_module"
+
+  name = local.aks_diagnostic_name
   target_resource_id         = azurerm_kubernetes_cluster.aks.id
   log_analytics_workspace_id = var.log_analytics_id
 }
