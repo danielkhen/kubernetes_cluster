@@ -10,15 +10,13 @@
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_container_registry_id"></a> [container\_registry\_id](#input\_container\_registry\_id) | (Optional) The id of the azure container registry to assign access to the. | `string` | `null` | no |
-| <a name="input_container_registry_link"></a> [container\_registry\_link](#input\_container\_registry\_link) | (Optional) Should there be a role assignment to a container registry. | `bool` | `false` | no |
+| <a name="input_container_registry_id"></a> [container\_registry\_id](#input\_container\_registry\_id) | (Required) The id of the azure container registry to assign access to the. | `string` | n/a | yes |
 | <a name="input_default_node_pool"></a> [default\_node\_pool](#input\_default\_node\_pool) | (Required) The default node pool of the kubernetes cluster. | <pre>object({<br>    name                  = string<br>    node_count            = number<br>    vm_size               = string<br>    vnet_subnet_id        = optional(string, null)<br>    enable_auto_scaling   = optional(bool, false)<br>    enable_node_public_ip = optional(bool, false)<br>    max_pods              = optional(number, null)<br>    min_count             = optional(number, null)<br>    max_count             = optional(number, null)<br>    os_sku                = optional(string, "Ubuntu")<br>    os_type               = optional(string, "Linux")<br>  })</pre> | n/a | yes |
-| <a name="input_diagnostics_name"></a> [diagnostics\_name](#input\_diagnostics\_name) | (Optional) The name of the diagnostic setting of the kubernetes cluster. | `string` | `"aks-diagnostics"` | no |
 | <a name="input_dns_prefix"></a> [dns\_prefix](#input\_dns\_prefix) | (Optional) The dns prefix for the kuberenetes api. | `string` | `null` | no |
 | <a name="input_dns_service_ip"></a> [dns\_service\_ip](#input\_dns\_service\_ip) | (Optional) The ip address of the dns service. | `string` | `null` | no |
 | <a name="input_location"></a> [location](#input\_location) | (Required) The location of the kubernetes cluster. | `string` | n/a | yes |
-| <a name="input_log_analytics_enabled"></a> [log\_analytics\_enabled](#input\_log\_analytics\_enabled) | (Optional) Should all logs be sent to a log analytics workspace. | `bool` | `false` | no |
-| <a name="input_log_analytics_id"></a> [log\_analytics\_id](#input\_log\_analytics\_id) | (Optional) The id of the log analytics workspace. | `string` | `null` | no |
+| <a name="input_log_analytics_id"></a> [log\_analytics\_id](#input\_log\_analytics\_id) | (Required) The id of the log analytics workspace. | `string` | n/a | yes |
+| <a name="input_max_node_provisioning_time"></a> [max\_node\_provisioning\_time](#input\_max\_node\_provisioning\_time) | (Optional) The maximum time the autoscaler waits for a node to be provisioned. | `string` | `"15m"` | no |
 | <a name="input_name"></a> [name](#input\_name) | (Required) The name of the kubernetes cluster. | `string` | n/a | yes |
 | <a name="input_network_plugin"></a> [network\_plugin](#input\_network\_plugin) | (Optional) The network plugin of the aks, azure, kubenet or none. | `string` | `"none"` | no |
 | <a name="input_node_pools"></a> [node\_pools](#input\_node\_pools) | (Optional) A list of node pools. | <pre>list(object({<br>    name                  = string<br>    node_count            = number<br>    vm_size               = string<br>    vnet_subnet_id        = optional(string, null)<br>    enable_auto_scaling   = optional(bool, false)<br>    enable_node_public_ip = optional(bool, false)<br>    max_pods              = optional(number, null)<br>    min_count             = optional(number, null)<br>    max_count             = optional(number, null)<br>    os_sku                = optional(string, "Ubuntu")<br>    os_type               = optional(string, "Linux")<br>  }))</pre> | `[]` | no |
@@ -45,7 +43,7 @@
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aks_diagnostics"></a> [aks\_diagnostics](#module\_aks\_diagnostics) | github.com/danielkhen/diagnostic_setting_module | n/a |
+| <a name="module_aks_diagnostic"></a> [aks\_diagnostic](#module\_aks\_diagnostic) | github.com/danielkhen/diagnostic_setting_module | n/a |
 
 ## Example Code
 
@@ -67,9 +65,7 @@ module "aks" {
   # View variable documentation
   default_node_pool = local.default_node_pool
   node_pools        = local.node_pools
-
-  log_analytics_enabled = true
-  log_analytics_id      = azurerm_log_analytics_workspace.example.id
+  log_analytics_id  = azurerm_log_analytics_workspace.example.id
 }
 ```
 <!-- END_TF_DOCS -->

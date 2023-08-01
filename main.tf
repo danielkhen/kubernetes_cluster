@@ -33,12 +33,8 @@ resource "azurerm_kubernetes_cluster" "aks" {
     os_sku                = var.default_node_pool.os_sku
   }
 
-  dynamic "identity" {
-    for_each = var.container_registry_link ? [true] : []
-
-    content {
-      type = local.identity_type
-    }
+  identity {
+    type = local.identity_type
   }
 
   oms_agent {
@@ -76,8 +72,6 @@ locals {
 }
 
 resource "azurerm_role_assignment" "acr_role" {
-  count = var.container_registry_link ? 1 : 0
-
   principal_id         = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
   role_definition_name = local.role_definition_name
   scope                = var.container_registry_id
@@ -90,7 +84,7 @@ locals {
 module "aks_diagnostic" {
   source = "github.com/danielkhen/diagnostic_setting_module"
 
-  name = local.aks_diagnostic_name
+  name                       = local.aks_diagnostic_name
   target_resource_id         = azurerm_kubernetes_cluster.aks.id
   log_analytics_workspace_id = var.log_analytics_id
 }

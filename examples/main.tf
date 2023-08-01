@@ -15,7 +15,5 @@ module "aks" {
   # View variable documentation
   default_node_pool = local.default_node_pool
   node_pools        = local.node_pools
-
-  log_analytics_enabled = true
-  log_analytics_id      = azurerm_log_analytics_workspace.example.id
+  log_analytics_id  = azurerm_log_analytics_workspace.example.id
 }
