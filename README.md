@@ -29,7 +29,9 @@
 
 | Name | Description |
 |------|-------------|
-| <a name="output_id"></a> [id](#output\_id) | n/a |
+| <a name="output_id"></a> [id](#output\_id) | The id of the kubernetes cluster. |
+| <a name="output_name"></a> [name](#output\_name) | The name of the kubernetes cluster. |
+| <a name="output_object"></a> [object](#output\_object) | The kubernetes cluster object. |
 
 ## Resources
 
