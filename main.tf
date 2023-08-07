@@ -2,6 +2,8 @@ locals {
   identity_type = "SystemAssigned"
 }
 
+#TODO add vnet links
+
 resource "azurerm_kubernetes_cluster" "aks" {
   name                    = var.name
   location                = var.location
