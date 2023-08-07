@@ -10,6 +10,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   private_cluster_enabled = var.private_cluster_enabled
   dns_prefix              = var.dns_prefix == null ? var.name : var.dns_prefix
 
+
   auto_scaler_profile {
     max_node_provisioning_time = var.max_node_provisioning_time
   }
