@@ -19,14 +19,14 @@ variable "default_node_pool" {
     name                  = string
     node_count            = number
     vm_size               = string
-    vnet_subnet_id        = optional(string, null)
-    enable_auto_scaling   = optional(bool, false)
-    enable_node_public_ip = optional(bool, false)
-    max_pods              = optional(number, null)
-    min_count             = optional(number, null)
-    max_count             = optional(number, null)
-    os_sku                = optional(string, "Ubuntu")
-    os_type               = optional(string, "Linux")
+    vnet_subnet_id        = optional(string)
+    enable_auto_scaling   = optional(bool)
+    enable_node_public_ip = optional(bool)
+    max_pods              = optional(number)
+    min_count             = optional(number)
+    max_count             = optional(number)
+    os_sku                = optional(string)
+    os_type               = optional(string)
   })
 }
 
@@ -36,14 +36,14 @@ variable "node_pools" {
     name                  = string
     node_count            = number
     vm_size               = string
-    vnet_subnet_id        = optional(string, null)
-    enable_auto_scaling   = optional(bool, false)
-    enable_node_public_ip = optional(bool, false)
-    max_pods              = optional(number, null)
-    min_count             = optional(number, null)
-    max_count             = optional(number, null)
-    os_sku                = optional(string, "Ubuntu")
-    os_type               = optional(string, "Linux")
+    vnet_subnet_id        = optional(string)
+    enable_auto_scaling   = optional(bool)
+    enable_node_public_ip = optional(bool)
+    max_pods              = optional(number)
+    min_count             = optional(number)
+    max_count             = optional(number)
+    os_sku                = optional(string)
+    os_type               = optional(string)
   }))
   default = []
 }
