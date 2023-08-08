@@ -3,12 +3,13 @@ locals {
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
-  name                    = var.name
-  location                = var.location
-  resource_group_name     = var.resource_group_name
-  node_resource_group     = var.node_resource_group
-  private_cluster_enabled = var.private_cluster_enabled
-  private_dns_zone_id     = var.private_dns_zone_id
+  name                       = var.name
+  location                   = var.location
+  resource_group_name        = var.resource_group_name
+  node_resource_group        = var.node_resource_group
+  private_cluster_enabled    = var.private_cluster_enabled
+  private_dns_zone_id        = var.private_dns_zone_id
+  dns_prefix_private_cluster = var.name
 
   auto_scaler_profile {
     max_node_provisioning_time = var.max_node_provisioning_time
