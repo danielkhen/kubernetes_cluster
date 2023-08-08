@@ -81,12 +81,6 @@ variable "node_resource_group" {
   default     = null
 }
 
-variable "dns_prefix" {
-  description = "(Optional) The dns prefix for the kuberenetes api."
-  type        = string
-  default     = null
-}
-
 variable "service_cidr" {
   description = "(Optional) The range of ip addresses assigned to services."
   type        = string
@@ -103,4 +97,10 @@ variable "max_node_provisioning_time" {
   description = "(Optional) The maximum time the autoscaler waits for a node to be provisioned."
   type        = string
   default     = "15m"
+}
+
+variable "private_dns_zone_id" {
+  description = "(Optional) The id of the private dns zone of the cluster."
+  type        = string
+  default     = null
 }

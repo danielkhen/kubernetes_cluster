@@ -2,16 +2,13 @@ locals {
   identity_type = "SystemAssigned"
 }
 
-#TODO add vnet links
-
 resource "azurerm_kubernetes_cluster" "aks" {
   name                    = var.name
   location                = var.location
   resource_group_name     = var.resource_group_name
   node_resource_group     = var.node_resource_group
   private_cluster_enabled = var.private_cluster_enabled
-  dns_prefix              = var.dns_prefix == null ? var.name : var.dns_prefix
-
+  private_dns_zone_id     = var.private_dns_zone_id
 
   auto_scaler_profile {
     max_node_provisioning_time = var.max_node_provisioning_time
