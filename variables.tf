@@ -104,3 +104,29 @@ variable "private_dns_zone_id" {
   type        = string
   default     = null
 }
+
+variable "identity_type" {
+  description = "(Optional) The type of the identity of the kubernetes cluster."
+  type        = string
+  default     = "None"
+  validation {
+    condition     = contains(["SystemAssigned", "UserAssigned", "None"], var.identity_type)
+    error_message = "Identity should be SystemAssigned, UserAssigned or None"
+  }
+}
+
+variable "role_assignments" {
+  description = "(Optional) A list of rules for the system identity, system assigned identity must be enabled."
+  type = list(object({
+    name  = string
+    scope = string
+    role  = string
+  }))
+  default = []
+}
+
+variable "user_assigned_identities" {
+  description = "(Optional) A list of ids of user assigned identities for the kubernetes cluster, user assigned identity must be enabled."
+  type        = list(string)
+  default     = null
+}

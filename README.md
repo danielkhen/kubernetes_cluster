@@ -13,6 +13,7 @@
 | <a name="input_container_registry_id"></a> [container\_registry\_id](#input\_container\_registry\_id) | (Required) The id of the azure container registry to assign access to the. | `string` | n/a | yes |
 | <a name="input_default_node_pool"></a> [default\_node\_pool](#input\_default\_node\_pool) | (Required) The default node pool of the kubernetes cluster. | <pre>object({<br>    name                  = string<br>    node_count            = number<br>    vm_size               = string<br>    vnet_subnet_id        = optional(string)<br>    enable_auto_scaling   = optional(bool)<br>    enable_node_public_ip = optional(bool)<br>    max_pods              = optional(number)<br>    min_count             = optional(number)<br>    max_count             = optional(number)<br>    os_sku                = optional(string)<br>    os_type               = optional(string)<br>  })</pre> | n/a | yes |
 | <a name="input_dns_service_ip"></a> [dns\_service\_ip](#input\_dns\_service\_ip) | (Optional) The ip address of the dns service. | `string` | `null` | no |
+| <a name="input_identity_type"></a> [identity\_type](#input\_identity\_type) | (Optional) The type of the identity of the kubernetes cluster. | `string` | `"None"` | no |
 | <a name="input_location"></a> [location](#input\_location) | (Required) The location of the kubernetes cluster. | `string` | n/a | yes |
 | <a name="input_log_analytics_id"></a> [log\_analytics\_id](#input\_log\_analytics\_id) | (Required) The id of the log analytics workspace. | `string` | n/a | yes |
 | <a name="input_max_node_provisioning_time"></a> [max\_node\_provisioning\_time](#input\_max\_node\_provisioning\_time) | (Optional) The maximum time the autoscaler waits for a node to be provisioned. | `string` | `"15m"` | no |
@@ -23,7 +24,9 @@
 | <a name="input_private_cluster_enabled"></a> [private\_cluster\_enabled](#input\_private\_cluster\_enabled) | (Optional) Should the kubernetes api get a private ip address on the virtual network. | `bool` | `true` | no |
 | <a name="input_private_dns_zone_id"></a> [private\_dns\_zone\_id](#input\_private\_dns\_zone\_id) | (Optional) The id of the private dns zone of the cluster. | `string` | `null` | no |
 | <a name="input_resource_group_name"></a> [resource\_group\_name](#input\_resource\_group\_name) | (Required) The resource group name of the kubernetes cluster. | `string` | n/a | yes |
+| <a name="input_role_assignments"></a> [role\_assignments](#input\_role\_assignments) | (Optional) A list of rules for the system identity, system assigned identity must be enabled. | <pre>list(object({<br>    name  = string<br>    scope = string<br>    role  = string<br>  }))</pre> | `[]` | no |
 | <a name="input_service_cidr"></a> [service\_cidr](#input\_service\_cidr) | (Optional) The range of ip addresses assigned to services. | `string` | `null` | no |
+| <a name="input_user_assigned_identities"></a> [user\_assigned\_identities](#input\_user\_assigned\_identities) | (Optional) A list of ids of user assigned identities for the kubernetes cluster, user assigned identity must be enabled. | `list(string)` | `null` | no |
 
 ## Outputs
 
@@ -39,7 +42,7 @@
 |------|------|
 | [azurerm_kubernetes_cluster.aks](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster) | resource |
 | [azurerm_kubernetes_cluster_node_pool.node_pools](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/kubernetes_cluster_node_pool) | resource |
-| [azurerm_role_assignment.acr_role](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
+| [azurerm_role_assignment.aks_roles](https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/role_assignment) | resource |
 
 ## Modules
 

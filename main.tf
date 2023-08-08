@@ -1,5 +1,5 @@
 locals {
-  identity_type = "SystemAssigned"
+  identity_type = "UserAssigned"
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
@@ -34,8 +34,13 @@ resource "azurerm_kubernetes_cluster" "aks" {
     os_sku                = var.default_node_pool.os_sku
   }
 
-  identity {
-    type = local.identity_type
+  dynamic "identity" {
+    for_each = var.identity_type == "None" ? [] : [true]
+
+    content {
+      type         = var.identity_type
+      identity_ids = var.user_assigned_identities
+    }
   }
 
   oms_agent {
@@ -69,13 +74,15 @@ resource "azurerm_kubernetes_cluster_node_pool" "node_pools" {
 }
 
 locals {
-  role_definition_name = "AcrPull"
+  role_assignements_map = { for role in var.role_assignments : role.name => role }
 }
 
-resource "azurerm_role_assignment" "acr_role" {
+resource "azurerm_role_assignment" "aks_roles" {
+  for_each = local.role_assignements_map
+
   principal_id         = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
-  role_definition_name = local.role_definition_name
-  scope                = var.container_registry_id
+  role_definition_name = each.value.role
+  scope                = each.value.scope
 }
 
 locals {
