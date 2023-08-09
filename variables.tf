@@ -69,12 +69,6 @@ variable "network_plugin" {
   }
 }
 
-variable "private_cluster_enabled" {
-  description = "(Optional) Should the kubernetes api get a private ip address on the virtual network."
-  type        = bool
-  default     = true
-}
-
 variable "node_resource_group" {
   description = "(Optional) The resource group name where all the components of the kubernetes cluster reside."
   type        = string

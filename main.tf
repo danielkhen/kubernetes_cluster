@@ -1,5 +1,6 @@
 locals {
-  identity_type = "UserAssigned"
+  identity_type   = "UserAssigned"
+  private_cluster = true
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
@@ -7,7 +8,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   location                   = var.location
   resource_group_name        = var.resource_group_name
   node_resource_group        = var.node_resource_group
-  private_cluster_enabled    = var.private_cluster_enabled
+  private_cluster_enabled    = local.private_cluster
   private_dns_zone_id        = var.private_dns_zone_id
   dns_prefix_private_cluster = var.name
 
